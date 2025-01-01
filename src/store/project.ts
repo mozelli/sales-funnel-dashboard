@@ -9,6 +9,12 @@ type Project = {
 
 type Section = {
   name: string;
+  content: Content[];
+};
+
+type Content = {
+  type: string;
+  attributes: string;
 };
 
 export const useProject = create<Project>((set) => ({
@@ -20,6 +26,17 @@ export const useProject = create<Project>((set) => ({
     })),
   setSection: (text: string) =>
     set((state) => ({
-      sections: [...state.sections, { name: text }],
+      sections: [
+        ...state.sections,
+        {
+          name: text,
+          content: [
+            {
+              type: "container",
+              attributes: "p-2 bg-indigo-300",
+            },
+          ],
+        },
+      ],
     })),
 }));
