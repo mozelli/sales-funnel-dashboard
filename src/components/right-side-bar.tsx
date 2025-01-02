@@ -1,9 +1,7 @@
+import { userFunnelStore } from "../store/project";
+
 const RightSideBar = () => {
-  return (
-    <div className="w-[200px]">
-      <h1>Right Side Bar</h1>
-    </div>
-  );
+  return <div className="w-[200px]"></div>;
 };
 
 export default RightSideBar;
