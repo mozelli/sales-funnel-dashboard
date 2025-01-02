@@ -89,9 +89,9 @@ const LeftSideBar = () => {
         <Button
           className="w-full bg-slate-400 hover:bg-slate-800"
           size={"sm"}
-          onClick={() => addNewNode("container")}
+          onClick={() => addNewNode("alert")}
         >
-          Container
+          Alerta
         </Button>
         <Button
           className="w-full bg-slate-400 hover:bg-slate-800"
