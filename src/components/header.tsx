@@ -1,11 +1,11 @@
-import { useProject } from "../store/project";
+import { userFunnelStore } from "../store/project";
 
 const Header = () => {
-  const { name } = useProject();
+  const { funnel } = userFunnelStore();
   return (
     <header className="w-full p-1 border-b flex items-center">
       <div>
-        <span className="font-bold text-indigo-700">{name}</span>
+        <span className="font-bold text-indigo-700">{funnel.name}</span>
       </div>
     </header>
   );

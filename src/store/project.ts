@@ -1,33 +1,87 @@
 import { create } from "zustand";
 
-type Project = {
+type Funnel = {
   id: string;
   name: string;
-  setProjectName: (projectName: string) => void;
-  steps: Step[];
-  setStep: (step: Step) => void;
-  currentStep: string;
+  stages: Stage[];
 };
 
-type Step = {
+type Stage = {
   id: string;
-  project_id: string;
   name: string;
   nodes: Node[];
 };
 
 type Node = {
   id: string;
-  step_id: string;
   type: string;
-  attributes: { class: string; textContent: string | null };
-  children: Node | null;
+  attributes: {
+    key: string;
+    src?: string;
+    alt?: string;
+    href?: string;
+    class?: string;
+    textContent?: string;
+  };
+  children: Node[];
 };
 
-export const useProject = create<Project>((set) => ({
+type FunnelState = {
+  funnel: Funnel;
+  updateFunnelName: (name: string) => void;
+  addStage: (stage: Stage) => void;
+  addNodeToStage: (stageId: string, node: Node) => void;
+  currentStage: string;
+  setCurrentStage: (stageId: string) => void;
+};
+
+export const userFunnelStore = create<FunnelState>((set) => ({
+  funnel: {
+    id: crypto.randomUUID(),
+    name: "Meu funil",
+    stages: [],
+  },
+  updateFunnelName: (name) =>
+    set((state) => ({
+      funnel: { ...state.funnel, name },
+    })),
+  addStage: (stage: Stage) =>
+    set((state) => ({
+      funnel: { ...state.funnel, stages: [...state.funnel.stages, stage] },
+    })),
+
+  addNodeToStage: (stageId, node) =>
+    set((state) => ({
+      funnel: {
+        ...state.funnel,
+        stages: state.funnel.stages.map((stage) =>
+          stage.id === stageId
+            ? { ...stage, nodes: [...stage.nodes, node] }
+            : stage
+        ),
+      },
+    })),
+  currentStage: "",
+  setCurrentStage: (stageId) =>
+    set(() => ({
+      currentStage: stageId,
+    })),
+}));
+
+/*export const useFunnel = create<Funnel>((set) => ({
   id: crypto.randomUUID(),
   name: "Project Name",
-  setProjectName: (projectName) =>
+  stages: [],
+  setStage: (stage) => 
+    set((state) => ({
+      stages: [
+        ...state.stages,
+      ]
+    }))
+}));
+
+/*
+ setProjectName: (projectName) =>
     set(() => ({
       name: projectName,
     })),
@@ -38,11 +92,14 @@ export const useProject = create<Project>((set) => ({
         ...state.steps,
         {
           id: crypto.randomUUID(),
-          project_id: step.project_id,
           name: step.name,
           nodes: [],
         },
       ],
     })),
   currentStep: "",
-}));
+  setCurrentStep: (currentStep) =>
+    set(() => ({
+      currentStep,
+    })),
+ */

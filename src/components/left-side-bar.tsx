@@ -1,15 +1,46 @@
 import { useState } from "react";
-import { useProject } from "../store/project";
+import { userFunnelStore } from "../store/project";
 import { Plus, StickyNote } from "lucide-react";
 import { Button } from "./ui/button";
+//import { Link } from "react-router";
+
+type Node = {
+  id: string;
+  type: string;
+  attributes: {
+    key: string;
+    src?: string;
+    alt?: string;
+    href?: string;
+    class?: string;
+    textContent?: string;
+  };
+  children: Node[];
+};
 
 const LeftSideBar = () => {
-  const { id, steps, setStep } = useProject();
-  const [stepName, setStepName] = useState("");
+  const { funnel, addStage, setCurrentStage, currentStage, addNodeToStage } =
+    userFunnelStore();
+  const [stageName, setStageName] = useState("");
 
-  const addNewStep = () => {
-    setStep({ id: "", project_id: id, name: stepName, nodes: [] });
-    setStepName("");
+  const addNewStage = () => {
+    //setStep({ id: "", project_id: id, name: stepName, nodes: [] });
+    const id = crypto.randomUUID();
+    addStage({ id, name: stageName, nodes: [] });
+    setCurrentStage(id);
+    setStageName("");
+  };
+
+  const addNewNode = (type: string) => {
+    const node: Node = {
+      id: crypto.randomUUID(),
+      type,
+      attributes: {
+        key: crypto.randomUUID(),
+      },
+      children: [],
+    };
+    addNodeToStage(currentStage, node);
   };
 
   return (
@@ -19,15 +50,15 @@ const LeftSideBar = () => {
           <input
             placeholder="Criar nova etapa"
             type="text"
-            value={stepName}
-            onChange={(e) => setStepName(e.target.value)}
+            value={stageName}
+            onChange={(e) => setStageName(e.target.value)}
             className="border-2 rounded-sm p-1 outline-none"
           />
           {
             <Button
               variant={"outline"}
               className="border-indigo-200 border-2 rounded-sm"
-              onClick={() => addNewStep()}
+              onClick={() => addNewStage()}
             >
               <Plus />
             </Button>
@@ -35,11 +66,15 @@ const LeftSideBar = () => {
         </div>
         <div className="">
           <ul>
-            {steps.map((step, index) => {
+            {funnel.stages.map((stage, index) => {
               return (
-                <li key={index} className="p-2 flex items-center gap-1">
+                <li
+                  key={index}
+                  className="p-2 flex items-center gap-1 cursor-pointer"
+                  onClick={() => setCurrentStage(stage.id)}
+                >
                   <StickyNote />
-                  <span>{step.name}</span>
+                  <span>{stage.name}</span>
                 </li>
               );
             })}
@@ -47,12 +82,30 @@ const LeftSideBar = () => {
         </div>
       </div>
       <div
-        className={`flex flex-col items-center w-[100px] pl-1 ${
-          steps.length === 0 ? "hidden" : "block"
+        className={`flex flex-col gap-1 items-center w-[100px] pl-1 ${
+          funnel.stages.length === 0 ? "hidden" : "block"
         }`}
       >
-        <Button className="w-full" size={"sm"}>
+        <Button
+          className="w-full bg-slate-400 hover:bg-slate-800"
+          size={"sm"}
+          onClick={() => addNewNode("container")}
+        >
           Container
+        </Button>
+        <Button
+          className="w-full bg-slate-400 hover:bg-slate-800"
+          size={"sm"}
+          onClick={() => addNewNode("button")}
+        >
+          Botão
+        </Button>
+        <Button
+          className="w-full bg-slate-400 hover:bg-slate-800"
+          size={"sm"}
+          onClick={() => addNewNode("alert")}
+        >
+          Alert
         </Button>
       </div>
     </div>
