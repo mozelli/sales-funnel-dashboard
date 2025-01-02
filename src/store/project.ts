@@ -1,42 +1,48 @@
 import { create } from "zustand";
 
 type Project = {
+  id: string;
   name: string;
-  sections: Section[];
-  setName: (text: string) => void;
-  setSection: (text: string) => void;
+  setProjectName: (projectName: string) => void;
+  steps: Step[];
+  setStep: (step: Step) => void;
+  currentStep: string;
 };
 
-type Section = {
+type Step = {
+  id: string;
+  project_id: string;
   name: string;
-  content: Content[];
+  nodes: Node[];
 };
 
-type Content = {
+type Node = {
+  id: string;
+  step_id: string;
   type: string;
-  attributes: string;
+  attributes: { class: string; textContent: string | null };
+  children: Node | null;
 };
 
 export const useProject = create<Project>((set) => ({
-  name: "Novo projeto",
-  sections: [],
-  setName: (text) =>
+  id: crypto.randomUUID(),
+  name: "Project Name",
+  setProjectName: (projectName) =>
     set(() => ({
-      name: text,
+      name: projectName,
     })),
-  setSection: (text: string) =>
+  steps: [],
+  setStep: (step) =>
     set((state) => ({
-      sections: [
-        ...state.sections,
+      steps: [
+        ...state.steps,
         {
-          name: text,
-          content: [
-            {
-              type: "container",
-              attributes: "p-2 bg-indigo-300",
-            },
-          ],
+          id: crypto.randomUUID(),
+          project_id: step.project_id,
+          name: step.name,
+          nodes: [],
         },
       ],
     })),
+  currentStep: "",
 }));
