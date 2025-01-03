@@ -1,26 +1,14 @@
 import { useState } from "react";
-import { userFunnelStore } from "../store/project";
+
 import { Plus, StickyNote } from "lucide-react";
 import { Button } from "./ui/button";
-//import { Link } from "react-router";
 
-type Node = {
-  id: string;
-  type: string;
-  attributes: {
-    key: string;
-    src?: string;
-    alt?: string;
-    href?: string;
-    class?: string;
-    textContent?: string;
-  };
-  children: Node[];
-};
+import { useFunnelStore } from "../store/project";
+import { Node } from "../types/Node";
 
 const LeftSideBar = () => {
   const { funnel, addStage, setCurrentStage, currentStage, addNodeToStage } =
-    userFunnelStore();
+    useFunnelStore();
   const [stageName, setStageName] = useState("");
 
   const addNewStage = () => {
