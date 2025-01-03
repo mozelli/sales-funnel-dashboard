@@ -1,30 +1,8 @@
 import { create } from "zustand";
 
-type Funnel = {
-  id: string;
-  name: string;
-  stages: Stage[];
-};
-
-type Stage = {
-  id: string;
-  name: string;
-  nodes: Node[];
-};
-
-type Node = {
-  id: string;
-  type: string;
-  attributes: {
-    key: string;
-    src?: string;
-    alt?: string;
-    href?: string;
-    class?: string;
-    textContent?: string;
-  };
-  children: Node[];
-};
+import { Node } from "../types/Node";
+import { Stage } from "../types/Stage";
+import { Funnel } from "../types/Funnel";
 
 type FunnelState = {
   funnel: Funnel;
@@ -67,39 +45,3 @@ export const userFunnelStore = create<FunnelState>((set) => ({
       currentStage: stageId,
     })),
 }));
-
-/*export const useFunnel = create<Funnel>((set) => ({
-  id: crypto.randomUUID(),
-  name: "Project Name",
-  stages: [],
-  setStage: (stage) => 
-    set((state) => ({
-      stages: [
-        ...state.stages,
-      ]
-    }))
-}));
-
-/*
- setProjectName: (projectName) =>
-    set(() => ({
-      name: projectName,
-    })),
-  steps: [],
-  setStep: (step) =>
-    set((state) => ({
-      steps: [
-        ...state.steps,
-        {
-          id: crypto.randomUUID(),
-          name: step.name,
-          nodes: [],
-        },
-      ],
-    })),
-  currentStep: "",
-  setCurrentStep: (currentStep) =>
-    set(() => ({
-      currentStep,
-    })),
- */
