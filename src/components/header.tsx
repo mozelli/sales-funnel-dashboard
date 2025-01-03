@@ -1,7 +1,7 @@
-import { userFunnelStore } from "../store/project";
+import { useFunnelStore } from "../store/project";
 
 const Header = () => {
-  const { funnel } = userFunnelStore();
+  const { funnel } = useFunnelStore();
   return (
     <header className="w-full p-1 border-b flex items-center">
       <div>

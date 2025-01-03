@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { userFunnelStore } from "../../../store/project";
+import { useFunnelStore } from "../../../store/project";
 import { Button } from "../../../components/ui/button";
 import {
   Alert,
@@ -19,7 +19,7 @@ type Attributes = {
 };
 
 const Display = () => {
-  const { funnel, currentStage } = userFunnelStore();
+  const { funnel, currentStage } = useFunnelStore();
   const [activeDiv, setActiveDiv] = useState<string | null>(null);
   const divRefs = useRef<(HTMLDivElement | null)[]>([]);
 

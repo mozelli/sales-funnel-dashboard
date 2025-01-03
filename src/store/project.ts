@@ -13,7 +13,7 @@ type FunnelState = {
   setCurrentStage: (stageId: string) => void;
 };
 
-export const userFunnelStore = create<FunnelState>((set) => ({
+export const useFunnelStore = create<FunnelState>((set) => ({
   funnel: {
     id: crypto.randomUUID(),
     name: "Meu funil",
