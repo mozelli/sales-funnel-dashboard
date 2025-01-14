@@ -61,6 +61,13 @@ const EditTitle = () => {
           <option value="text-lg">18px</option>
           <option value="text-xl">20px</option>
           <option value="text-2xl">24px</option>
+          <option value="text-3xl">30px</option>
+          <option value="text-4xl">36px</option>
+          <option value="text-5xl">48px</option>
+          <option value="text-6xl">60px</option>
+          <option value="text-7xl">72px</option>
+          <option value="text-8xl">96px</option>
+          <option value="text-9xl">128px</option>
         </select>
       </div>
     </div>
