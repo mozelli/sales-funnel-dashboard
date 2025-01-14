@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 
-import { Button } from "../../../components/ui/button";
+/*import { Button } from "../../../components/ui/button";
 import {
   Alert,
   AlertDescription,
   AlertTitle,
 } from "../../../components/ui/alert";
-import { Terminal } from "lucide-react";
+import { Terminal } from "lucide-react";*/
 
 import { useFunnelStore } from "../../../store/funnelState";
 import { useDashboardStore } from "../../../store/dashboardState";
-import { Node } from "../../../types/Node";
+import { Node as MyNodeType } from "../../../types/Node";
 
 const Display = () => {
   const { funnel, currentStage } = useFunnelStore();
@@ -43,17 +43,16 @@ const Display = () => {
     }
   };
 
-  const stringfyAttributesClass = (node: Node) => {
+  const stringfyAttributesClass = (node: MyNodeType) => {
+    const classAttribute = node.attributes.class;
     let result = "";
-    //if (node.attributes.class !== undefined) {
-    if (Array.isArray(node.attributes.class)) {
-      const classArray = node.attributes.class;
-      result = classArray.join(" ");
+    if (classAttribute !== undefined) {
+      result = Object.values(classAttribute).join(" ");
     }
     return result;
   };
 
-  const componentConstructor = (node: Node) => {
+  const componentConstructor = (node: MyNodeType) => {
     switch (node.type) {
       case "title":
         return (
@@ -70,37 +69,11 @@ const Display = () => {
             }`}
             key={node.attributes.key}
           >
-            <h1
-              className={`text-2xl font-bold ${stringfyAttributesClass(node)}`}
-            >
-              Título
-            </h1>
+            <h1 className={`${stringfyAttributesClass(node)}`}>Título</h1>
           </div>
         );
         break;
-      case "button":
-        return <Button key={node.attributes.key}>Botão</Button>;
-        break;
-      case "alert":
-        return (
-          <div
-            ref={addRef}
-            onClick={() => setActiveDiv(node.attributes.key)}
-            className={
-              activeDiv === node.attributes.key
-                ? "border-2 border-cyan-500 border-dashed"
-                : ""
-            }
-            key={node.attributes.key}
-          >
-            <Alert>
-              <Terminal className="h-4 w-4" />
-              <AlertTitle>Título</AlertTitle>
-              <AlertDescription>Descrição</AlertDescription>
-            </Alert>
-          </div>
-        );
-        break;
+
       default:
         return "";
     }
