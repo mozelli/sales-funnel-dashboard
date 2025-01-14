@@ -2,17 +2,20 @@ import { SquareMousePointer, Type } from "lucide-react";
 
 import { useFunnelStore } from "../../store/funnelState";
 import { Node } from "../../types/Node";
+import NodeAttributes from "./lib/NodeAttributes";
 
 const ComponentsMenu = () => {
   const { currentStage, addNodeToStage, setCurrentNode } = useFunnelStore();
 
   const addNewNode = (type: string) => {
+    const nodeAttributes = new NodeAttributes();
+
     const node: Node = {
       id: crypto.randomUUID(),
       type,
       attributes: {
         key: crypto.randomUUID(),
-        class: ["w-full"],
+        class: nodeAttributes.set(type),
       },
       children: [],
     };
@@ -42,7 +45,19 @@ const ComponentsMenu = () => {
           <Type className="h-8 w-8" />
           <span className="text-xs">Title</span>
         </div>
-        <div className="flex flex-col gap-1 items-center justify-center border-2 border-dashed border-slate-400 p-2 w-20">
+        <div
+          className="
+          flex 
+          flex-col 
+          gap-1 
+          items-center 
+          justify-center 
+          border-2 
+          border-dashed 
+          border-slate-400 
+          p-2 
+          w-20"
+        >
           <SquareMousePointer className="h-8 w-8" />
           <span className="text-xs">Botão</span>
         </div>
