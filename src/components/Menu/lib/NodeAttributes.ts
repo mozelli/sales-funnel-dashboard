@@ -9,10 +9,18 @@ class NodeAttributes {
       case "title":
         return {
           size: "text-2xl",
+          weight: "font-bold",
+          letterSpacing: "tracking-normal",
+          textAlign: "text-left",
+          color: "text-gray-900",
         };
       default:
         return {
           size: "",
+          weight: "",
+          letterSpacing: "",
+          textAlign: "",
+          color: "",
         };
     }
   }

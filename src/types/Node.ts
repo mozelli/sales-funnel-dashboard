@@ -16,6 +16,10 @@ export type Attributes = {
 
 export type TitleClass = {
   size: string;
+  weight: string;
+  letterSpacing: string;
+  textAlign: string;
+  color: string;
 };
 
 /*export type AttributeClass = {
