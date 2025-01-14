@@ -1,17 +1,16 @@
 import { Outlet } from "react-router";
-import LeftSideBar from "../../components/left-side-bar";
-import RightSideBar from "../../components/right-side-bar";
+
 import Header from "../../components/header";
 import Footer from "../../components/footer";
+import Menu from "../../components/Menu";
 
 const Dashboard = () => {
   return (
     <div className="flex flex-col h-screen">
       <Header />
       <div className="flex flex-1">
-        <LeftSideBar />
+        <Menu />
         <Outlet />
-        <RightSideBar />
       </div>
       <Footer />
     </div>
