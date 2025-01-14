@@ -1,14 +1,13 @@
 import { useState } from "react";
 
-import { Plus, StickyNote } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Button } from "../ui/button";
 
 import { useFunnelStore } from "../../store/funnelState";
-import { useDashboardStore } from "../../store/dashboardState";
+import StageList from "../stageList";
 
 const StagesMenu = () => {
-  const { funnel, addStage, setCurrentStage } = useFunnelStore();
-  const { setMenu } = useDashboardStore();
+  const { addStage, setCurrentStage } = useFunnelStore();
 
   const [stageName, setStageName] = useState("");
 
@@ -17,11 +16,6 @@ const StagesMenu = () => {
     addStage({ id, name: stageName, nodes: [] });
     setCurrentStage(id);
     setStageName("");
-  };
-
-  const changeCurrentStage = (stageId: string, menu: string) => {
-    setMenu(menu);
-    setCurrentStage(stageId);
   };
 
   return (
@@ -48,22 +42,7 @@ const StagesMenu = () => {
             </Button>
           }
         </div>
-        <div className="">
-          <ul>
-            {funnel.stages.map((stage, index) => {
-              return (
-                <li
-                  key={index}
-                  className="p-1 flex items-center gap-1 cursor-pointer hover:bg-slate-100"
-                  onClick={() => changeCurrentStage(stage.id, "componentsMenu")}
-                >
-                  <StickyNote className="h-4 w-4" />
-                  <span className="text-sm">{stage.name}</span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        <StageList />
       </div>
     </div>
   );
