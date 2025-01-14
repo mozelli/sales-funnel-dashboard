@@ -1,4 +1,4 @@
-import { userFunnelStore } from "../store/project";
+import { userFunnelStore } from "../store/funnelState";
 
 const RightSideBar = () => {
   return <div className="w-[200px]"></div>;

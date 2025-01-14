@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Plus, StickyNote } from "lucide-react";
 import { Button } from "./ui/button";
 
-import { useFunnelStore } from "../store/project";
+import { useFunnelStore } from "../store/funnelState";
 import { Node } from "../types/Node";
 
 const LeftSideBar = () => {

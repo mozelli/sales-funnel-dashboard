@@ -1,4 +1,4 @@
-import { useFunnelStore } from "../store/project";
+import { useFunnelStore } from "../store/funnelState";
 
 const Header = () => {
   const { funnel } = useFunnelStore();
