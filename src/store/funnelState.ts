@@ -11,6 +11,8 @@ type FunnelState = {
   addNodeToStage: (stageId: string, node: Node) => void;
   currentStage: string;
   setCurrentStage: (stageId: string) => void;
+  currentNode: string;
+  setCurrentNode: (nodeId: string) => void;
 };
 
 export const useFunnelStore = create<FunnelState>((set) => ({
@@ -43,5 +45,10 @@ export const useFunnelStore = create<FunnelState>((set) => ({
   setCurrentStage: (stageId) =>
     set(() => ({
       currentStage: stageId,
+    })),
+  currentNode: "",
+  setCurrentNode: (nodeId) =>
+    set(() => ({
+      currentNode: nodeId,
     })),
 }));
