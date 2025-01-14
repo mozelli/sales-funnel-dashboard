@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { Node } from "../types/Node";
+import { Node, TitleClass } from "../types/Node";
 import { Stage } from "../types/Stage";
 import { Funnel } from "../types/Funnel";
 
@@ -9,6 +9,11 @@ type FunnelState = {
   updateFunnelName: (name: string) => void;
   addStage: (stage: Stage) => void;
   addNodeToStage: (stageId: string, node: Node) => void;
+  updateNodeAttributeClass: (
+    stageId: string,
+    nodeId: string,
+    updatedClass: TitleClass
+  ) => void;
   currentStage: string;
   setCurrentStage: (stageId: string) => void;
   currentNode: string;
@@ -37,6 +42,30 @@ export const useFunnelStore = create<FunnelState>((set) => ({
         stages: state.funnel.stages.map((stage) =>
           stage.id === stageId
             ? { ...stage, nodes: [...stage.nodes, node] }
+            : stage
+        ),
+      },
+    })),
+  updateNodeAttributeClass: (stageId, nodeId, updatedClass) =>
+    set((state) => ({
+      funnel: {
+        ...state.funnel,
+        stages: state.funnel.stages.map((stage) =>
+          stage.id === stageId
+            ? {
+                ...stage,
+                nodes: stage.nodes.map((node) =>
+                  node.id === nodeId
+                    ? {
+                        ...node,
+                        attributes: {
+                          ...node.attributes,
+                          class: updatedClass,
+                        },
+                      }
+                    : node
+                ),
+              }
             : stage
         ),
       },

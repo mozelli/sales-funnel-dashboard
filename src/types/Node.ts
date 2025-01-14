@@ -10,8 +10,12 @@ export type Attributes = {
   src?: string;
   alt?: string;
   href?: string;
-  class?: string[];
+  class?: TitleClass;
   textContent?: string;
+};
+
+export type TitleClass = {
+  size: string;
 };
 
 /*export type AttributeClass = {
