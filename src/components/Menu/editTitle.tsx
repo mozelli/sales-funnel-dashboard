@@ -3,55 +3,64 @@ import { useEffect, useState } from "react";
 import { Separator } from "../ui/separator";
 
 import { useFunnelStore } from "../../store/funnelState";
+//import { TitleClass } from "../../types/Node";
 //import { Attributes } from "../../types/Node";
 
 const EditTitle = () => {
-  const { funnel, currentNode, currentStage } = useFunnelStore();
+  const { funnel, currentNode, currentStage, updateNodeAttributeClass } =
+    useFunnelStore();
 
-  //const [attributes, setAttributes] = useState<Attributes | null>(null);
-  const [width, setWidth] = useState<string | undefined>(undefined);
+  const [nodeClass, setNodeClass] = useState({});
+  const [size, setSize] = useState("");
 
   useEffect(() => {
-    const setWithDefaultValue = () => {
+    const getClassAttribute = () => {
       funnel.stages.map((stage) => {
         if (stage.id === currentStage) {
           stage.nodes.map((node) => {
             if (
               node.id === currentNode &&
-              Array.isArray(node.attributes.class)
+              node.attributes.class !== undefined
             ) {
-              const widthArray = ["w-full, w-6/12, 3/12"];
-              node.attributes.class.forEach((element) => {
-                if (widthArray.includes(element)) {
-                  setWidth(element);
-                }
-              });
-              //setWidth(node.attributes.class?.width);
+              setSize(node.attributes.class.size);
+              setNodeClass(node.attributes.class);
             }
           });
         }
       });
     };
-    setWithDefaultValue();
+    getClassAttribute();
   }, [currentNode, currentStage, funnel]);
+
+  const handleSize = (size: string) => {
+    setSize(size);
+    updateNodeAttributeClass(currentStage, currentNode, { ...nodeClass, size });
+  };
 
   return (
     <div className="">
       <div className="text-slate-600 text-xs font-bold m-1 text-center">
-        Layout
+        Editar título
       </div>
       <Separator className="my-2" />
       <div className="flex items-center justify-between m-1">
-        <label htmlFor="contentWidth">Largura</label>
+        <label htmlFor="fontSize" className="text-sm">
+          Tamanho
+        </label>
         <select
-          name="layoutWidth"
-          className="rounded-sm w-[80px] p-1"
-          value={width}
-          onChange={(e) => setWidth(e.target.value)}
+          id="fontSize"
+          value={size}
+          onChange={(e) => {
+            setSize(e.target.value);
+            handleSize(e.target.value);
+          }}
         >
-          <option value="w-full">100%</option>
-          <option value="w-6/12">50%</option>
-          <option value="w-3/12">25%</option>
+          <option value="text-xs">12px</option>
+          <option value="text-sm">14px</option>
+          <option value="text-base">16px</option>
+          <option value="text-lg">18px</option>
+          <option value="text-xl">20px</option>
+          <option value="text-2xl">24px</option>
         </select>
       </div>
     </div>
