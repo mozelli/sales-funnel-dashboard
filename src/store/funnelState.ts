@@ -8,14 +8,19 @@ type FunnelState = {
   funnel: Funnel;
   updateFunnelName: (name: string) => void;
   addStage: (stage: Stage) => void;
+  currentStage: string;
+  setCurrentStage: (stageId: string) => void;
   addNodeToStage: (stageId: string, node: Node) => void;
   updateNodeAttributeClass: (
     stageId: string,
     nodeId: string,
     updatedClass: TitleClass
   ) => void;
-  currentStage: string;
-  setCurrentStage: (stageId: string) => void;
+  updateNodeAttributeTextContent: (
+    stageId: string,
+    nodeId: string,
+    updatedTextContent: string
+  ) => void;
   currentNode: string;
   setCurrentNode: (nodeId: string) => void;
 };
@@ -34,7 +39,11 @@ export const useFunnelStore = create<FunnelState>((set) => ({
     set((state) => ({
       funnel: { ...state.funnel, stages: [...state.funnel.stages, stage] },
     })),
-
+  currentStage: "",
+  setCurrentStage: (stageId) =>
+    set(() => ({
+      currentStage: stageId,
+    })),
   addNodeToStage: (stageId, node) =>
     set((state) => ({
       funnel: {
@@ -70,11 +79,31 @@ export const useFunnelStore = create<FunnelState>((set) => ({
         ),
       },
     })),
-  currentStage: "",
-  setCurrentStage: (stageId) =>
-    set(() => ({
-      currentStage: stageId,
+  updateNodeAttributeTextContent: (stageId, nodeId, updatedTextContent) =>
+    set((state) => ({
+      funnel: {
+        ...state.funnel,
+        stages: state.funnel.stages.map((stage) =>
+          stage.id === stageId
+            ? {
+                ...stage,
+                nodes: stage.nodes.map((node) =>
+                  node.id === nodeId
+                    ? {
+                        ...node,
+                        attributes: {
+                          ...node.attributes,
+                          textContent: updatedTextContent,
+                        },
+                      }
+                    : node
+                ),
+              }
+            : stage
+        ),
+      },
     })),
+
   currentNode: "",
   setCurrentNode: (nodeId) =>
     set(() => ({
