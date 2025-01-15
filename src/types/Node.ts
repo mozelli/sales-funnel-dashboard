@@ -20,6 +20,10 @@ export type TitleClass = {
   letterSpacing: string;
   textAlign: string;
   color: string;
+  paddingTop: string;
+  paddingRight: string;
+  paddingBottom: string;
+  paddingLeft: string;
 };
 
 /*export type AttributeClass = {
