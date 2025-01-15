@@ -14,7 +14,15 @@ const Menu = () => {
           {menu !== "" && (
             <ChevronLeft
               className="text-slate-50 cursor-pointer h-5 w-5 hover:bg-indigo-500 rounded-sm"
-              onClick={() => setMenu("")}
+              onClick={() => {
+                if (menu === "componentsMenu") {
+                  setMenu("");
+                } else if (menu === "editTitle") {
+                  setMenu("componentsMenu");
+                } else {
+                  setMenu("");
+                }
+              }}
             />
           )}
         </div>
