@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 import { Button } from "../ui/button";
 
 import { useFunnelStore } from "../../store/funnelState";
-import StageList from "../stageList";
+import StageList from "./stageList";
 
 const StagesMenu = () => {
   const { addStage, setCurrentStage } = useFunnelStore();

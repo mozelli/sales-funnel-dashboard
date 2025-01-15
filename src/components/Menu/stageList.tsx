@@ -1,7 +1,7 @@
 import { StickyNote } from "lucide-react";
 
-import { useDashboardStore } from "../store/dashboardState";
-import { useFunnelStore } from "../store/funnelState";
+import { useDashboardStore } from "../../store/dashboardState";
+import { useFunnelStore } from "../../store/funnelState";
 
 const StageList = () => {
   const { funnel, setCurrentStage } = useFunnelStore();
