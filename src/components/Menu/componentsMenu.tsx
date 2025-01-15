@@ -2,20 +2,21 @@ import { SquareMousePointer, Type } from "lucide-react";
 
 import { useFunnelStore } from "../../store/funnelState";
 import { Node } from "../../types/Node";
-import NodeAttributes from "./lib/NodeAttributes";
+import StageNode from "./lib/StageNode";
 
 const ComponentsMenu = () => {
   const { currentStage, addNodeToStage, setCurrentNode } = useFunnelStore();
 
   const addNewNode = (type: string) => {
-    const nodeAttributes = new NodeAttributes();
+    const stageNode = new StageNode();
 
     const node: Node = {
       id: crypto.randomUUID(),
       type,
       attributes: {
         key: crypto.randomUUID(),
-        class: nodeAttributes.set(type),
+        class: stageNode.setTitleClass(type),
+        textContent: type === "title" ? "Título" : "",
       },
       children: [],
     };
