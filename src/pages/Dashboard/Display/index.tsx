@@ -13,7 +13,7 @@ import { useDashboardStore } from "../../../store/dashboardState";
 import { Node as MyNodeType } from "../../../types/Node";
 
 const Display = () => {
-  const { funnel, currentStage } = useFunnelStore();
+  const { funnel, currentStage, setCurrentNode } = useFunnelStore();
   const { setMenu } = useDashboardStore();
 
   const [activeDiv, setActiveDiv] = useState<string | null>(null);
@@ -52,6 +52,11 @@ const Display = () => {
     return result;
   };
 
+  const setActiveComponent = (nodeId: string, attributeKey: string) => {
+    setActiveDiv(attributeKey);
+    setCurrentNode(nodeId);
+  };
+
   const componentConstructor = (node: MyNodeType) => {
     switch (node.type) {
       case "title":
@@ -59,7 +64,7 @@ const Display = () => {
           <div
             ref={addRef}
             onClick={() => {
-              setActiveDiv(node.attributes.key);
+              setActiveComponent(node.id, node.attributes.key);
               setMenu("editTitle");
             }}
             className={`text-2xl font-bold ${
@@ -69,7 +74,9 @@ const Display = () => {
             }`}
             key={node.attributes.key}
           >
-            <h1 className={`${stringfyAttributesClass(node)}`}>Título</h1>
+            <h1 className={`${stringfyAttributesClass(node)}`}>
+              {node.attributes.textContent}
+            </h1>
           </div>
         );
         break;
